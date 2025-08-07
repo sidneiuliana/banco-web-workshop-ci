@@ -1,0 +1,24 @@
+name: 'Banco Web - CI'
+
+#Gatilhos / Triggers
+on:
+ workflow_dispatch:
+#Rotinas que serao executadas
+jobs:
+ cypresstets: #Nome do job
+   runs-on: ubuntu-latest  #Maquina que vai executar
+   env:
+     API_BASE_URL: 'http//localhost:3000'
+     PORT: 4000
+   
+   steps:
+     - name: Checkout do repositório
+       uses: actions/checkout@v4
+     - name: Instalar as dependencias
+       run: npm install
+     - name: Iniciar o servidor de mocks
+       run: npm run mock-server
+     - name: Iniciar o servidor da aplicacao
+       run: npm run server 
+     - name: Executar os testes
+       run: npx cypress run
